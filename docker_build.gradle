@@ -1,0 +1,16 @@
+apply plugin: 'docker'
+
+group = "umasuo"
+
+//build docker image
+task buildDocker(type: Docker, dependsOn: build) {
+  applicationName = jar.baseName
+  dockerfile = file('src/main/docker/Dockerfile')
+  tagVersion = '0.0.6'
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
+}

@@ -52,6 +52,7 @@ mysql>
 gradle buildDocker
 ```
 检查下自己的Dockerfile之类的准备工作是否做好
+
 7.查看自己打包出来的镜像
 ```
 docker images

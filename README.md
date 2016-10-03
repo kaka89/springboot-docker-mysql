@@ -1,15 +1,15 @@
 ## Demo
 
-1. 获取mysql的docker镜像
+1.获取mysql的docker镜像
 ```
 docker pull mysql
 ```
-2.  运行mysql镜像
+2.运行mysql镜像
 ```
 docker run --name mysql1 -e MYSQL_ROOT_PASSWORD=123456 -d mysql
 ```
 
-3.  检查一下docker运行结果
+3.检查一下docker运行结果
 
 ```
 docker ps
@@ -17,7 +17,7 @@ docker ps
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
 1eb1b4e8496a        mysql               "docker-entrypoint.sh"   8 seconds ago       Up 6 seconds        3306/tcp            mysql1
 ```
-4. 进入mysql的容器
+4.进入mysql的容器
 
 ```
 docker exec -i -t 1eb1b4e8496a /bin/bash
@@ -26,7 +26,7 @@ root@1eb1b4e8496a:/#
 ```
 `1eb1b4e8496a`是上条中出现的`CONTAINER ID`
 
-5. 使用mysql命令创建数据库
+5.使用mysql命令创建数据库
 ```
 mysql> mysql -uroot -p123456
 mysql> create database testdb;
@@ -46,19 +46,19 @@ mysql> show databases;
 mysql> 
 
 ```
-6. 打包自己程序的镜像
+6.打包自己程序的镜像
 
 ```
 gradle buildDocker
 ```
 检查下自己的Dockerfile之类的准备工作是否做好
-7. 查看自己打包出来的镜像
+7.查看自己打包出来的镜像
 ```
 docker images
 REPOSITORY                           TAG                 IMAGE ID            CREATED             SIZE
 umasuo/springboot-docker-mysql   latest              cb8010087d4f        4 seconds ago       244.9 MB
 ```
-8. 运行我们自己的容器
+8.运行我们自己的容器
 ```
  docker run -p 8080:8080 --name springboot-docker-mysql --link mysql1:mysqlhost umasuo/springboot-docker-mysql
 ```
@@ -78,7 +78,7 @@ spring.profiles.active=prod
 其中可以看到`spring.datasource.url=jdbc:mysql://mysqlhost:3306/testdb`,`mysqlhost`即是在运行我们自己的容器时置顶的msql容器的名称。这里的其它配置都直接通过`application.properties`build进了jar中，不用再单独配置。
 备注：如果你有环境变量需要设置的，请用-e添加。
 
-9. 测试我们的程序
+9.测试我们的程序
 
 手动往数据库里面插入一条数据：
 ```
@@ -99,7 +99,7 @@ mysql> select * from test_table;
 curl http://localhost:8080?id=1
 ```
 
-10. 至此则检验完了.
+10.至此则检验完了.
 
 平时可以使用docker --help等来查看相关命令的使用。
 
